@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Sales Playbook | Web Dev & Lead Strategy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; color: #1f2937; }
+        .playfair { font-family: 'Playfair Display', serif; }
+        .sidebar-link:hover, .sidebar-link.active { background-color: #1e293b; color: #38bdf8; border-left: 4px solid #38bdf8; }
+        .battlecard:hover { transform: translateY(-4px); transition: all 0.3s ease; }
+        .glass-header { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); }
+        .script-box { border-left: 4px solid #3b82f6; background-color: #f8fafc; }
+        .tier-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; }
+    </style>
+</head>
+<body class="flex">
+
+    <aside class="w-72 h-screen bg-slate-900 text-slate-300 fixed left-0 top-0 hidden lg:flex flex-col shadow-2xl z-50">
+        <div class="p-8 border-b border-slate-800">
+            <h1 class="text-2xl font-bold text-white playfair">Lead<span class="text-blue-400">Master</span></h1>
+            <p class="text-[10px] tracking-[0.2em] text-slate-500 font-bold uppercase mt-1">Houston Sales Hub</p>
+        </div>
+        <nav class="flex-grow p-4 space-y-1 overflow-y-auto">
+            <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Strategy</p>
+            <a href="#market" class="sidebar-link flex items-center p-3 rounded-lg transition-all"><i class="fa-solid fa-map-location-dot w-6"></i> Market Insight</a>
+            <a href="#scoring" class="sidebar-link flex items-center p-3 rounded-lg transition-all"><i class="fa-solid fa-ranking-star w-6"></i> Scoring Logic</a>
+            <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-6 mb-2">Target Battlecards</p>
+            <a href="#tier1" class="sidebar-link flex items-center p-3 rounded-lg transition-all"><i class="fa-solid fa-fire w-6 text-orange-500"></i> Tier 1: Service Pros</a>
+            <a href="#tier2" class="sidebar-link flex items-center p-3 rounded-lg transition-all"><i class="fa-solid fa-bolt w-6 text-yellow-500"></i> Tier 2: Lifestyle</a>
+            <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-6 mb-2">Execution</p>
+            <a href="#scripts" class="sidebar-link flex items-center p-3 rounded-lg transition-all"><i class="fa-solid fa-microphone-lines w-6"></i> Script Library</a>
+            <a href="#objections" class="sidebar-link flex items-center p-3 rounded-lg transition-all"><i class="fa-solid fa-shield-halved w-6"></i> Objection Killers</a>
+        </nav>
+    </aside>
+
+    <main class="lg:ml-72 w-full min-h-screen pb-20">
+        <div class="glass-header sticky top-0 z-40 p-6 text-white border-b border-slate-800 flex justify-between items-center">
+            <div>
+                <h2 class="text-lg font-semibold">Sales Lead Command Center</h2>
+                <p class="text-xs text-slate-400">Current Campaign: <span class="text-blue-400">Houston "No-Web" Outreach</span></p>
+            </div>
+            <div class="flex gap-4">
+                <div class="text-right hidden sm:block">
+                    <p class="text-[10px] text-slate-500 font-bold uppercase">Live Lead Count</p>
+                    <p class="text-sm font-bold text-emerald-400">1,434 Records</p>
+                </div>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-xs font-bold transition-all">Download Playbook PDF</button>
+            </div>
+        </div>
+
+        <div class="p-8 lg:p-12 max-w-6xl mx-auto space-y-20">
+
+            <section id="market" class="scroll-mt-24">
+                <div class="flex items-end justify-between mb-8">
+                    <div>
+                        <h3 class="text-3xl font-bold text-slate-900 playfair">Houston Market Opportunity</h3>
+                        <p class="text-slate-500 mt-2 text-lg">Why this campaign matters right now.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <i class="fa-solid fa-users-viewfinder text-blue-500 text-2xl mb-4"></i>
+                        <h4 class="font-bold text-slate-800">The "Trust Gap"</h4>
+                        <p class="text-sm text-slate-600 mt-2 leading-relaxed">In Houston's competitive service market, 78% of customers will skip a business if they cannot find a professional site, even if the Google Reviews are 5-star.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <i class="fa-solid fa-mobile-screen-button text-emerald-500 text-2xl mb-4"></i>
+                        <h4 class="font-bold text-slate-800">The Mobile Surge</h4>
+                        <p class="text-sm text-slate-600 mt-2 leading-relaxed">Most local searches for "Plumber" or "Food Truck" happen on the move. No site means no "One-Click Booking" or "Directions" integration.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <i class="fa-solid fa-chart-area text-purple-500 text-2xl mb-4"></i>
+                        <h4 class="font-bold text-slate-800">Wix Studio Edge</h4>
+                        <p class="text-sm text-slate-600 mt-2 leading-relaxed">We aren't selling "sites." We are selling <strong>Business Operating Systems</strong> (CRM, Bookings, Automations) that traditional agencies overcharge for.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="scoring" class="scroll-mt-24 bg-slate-900 rounded-[2rem] p-10 text-white">
+                <div class="max-w-3xl">
+                    <h3 class="text-3xl font-bold playfair">Lead Scoring: The 1–10 Breakdown</h3>
+                    <p class="text-slate-400 mt-4 text-lg">We use a proprietary algorithm to filter out junk and focus your energy on businesses that have "Ability to Pay" and "Critical Need."</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
+                    <div class="space-y-6">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-12 h-12 rounded-full bg-blue-500/20 border border-blue-500 flex items-center justify-center font-bold flex-shrink-0 text-blue-400">10</div>
+                            <div>
+                                <h4 class="font-bold text-lg">The "Golden" Lead</h4>
+                                <p class="text-sm text-slate-400">Operational + Phone listed + 20+ Reviews + 4.5 Stars. This is a business drowning in work but losing efficiency. They need <strong>Automation.</strong></p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="w-12 h-12 rounded-full bg-emerald-500/20 border border-emerald-500 flex items-center justify-center font-bold flex-shrink-0 text-emerald-400">7-9</div>
+                            <div>
+                                <h4 class="font-bold text-lg">High Growth</h4>
+                                <p class="text-sm text-slate-400">Good reviews but low volume. They need a site to <strong>Scale.</strong> High conversion probability for professional portfolios.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start opacity-50">
+                            <div class="w-12 h-12 rounded-full bg-slate-700 border border-slate-600 flex items-center justify-center font-bold flex-shrink-0 text-slate-400">1-4</div>
+                            <div>
+                                <h4 class="font-bold text-lg">Cold / Scouting</h4>
+                                <p class="text-sm text-slate-400">No phone or low ratings. Do not call. <strong>Walk-in only</strong> to verify they are still open.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800 rounded-2xl p-8 border border-slate-700">
+                        <h4 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-4">Calculation Logic (Weighting)</h4>
+                        <ul class="space-y-4 text-sm">
+                            <li class="flex justify-between border-b border-slate-700 pb-2"><span>Established Base Score</span> <span class="text-white font-bold">1 pt</span></li>
+                            <li class="flex justify-between border-b border-slate-700 pb-2"><span>Verified Phone Number</span> <span class="text-emerald-400 font-bold">+2 pts</span></li>
+                            <li class="flex justify-between border-b border-slate-700 pb-2"><span>Status: Operational</span> <span class="text-emerald-400 font-bold">+2 pts</span></li>
+                            <li class="flex justify-between border-b border-slate-700 pb-2"><span>High Social Proof (20+ Reviews)</span> <span class="text-emerald-400 font-bold">+3 pts</span></li>
+                            <li class="flex justify-between border-b border-slate-700 pb-2"><span>Customer Satisfaction (4.0+ Stars)</span> <span class="text-emerald-400 font-bold">+2 pts</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tier1" class="scroll-mt-24">
+                <div class="mb-8">
+                    <span class="bg-orange-100 text-orange-600 tier-pill">Tier 1: Emergency & High Ticket</span>
+                    <h3 class="text-3xl font-bold text-slate-900 playfair mt-2">Core Industry Battlecards</h3>
+                    <p class="text-slate-500">Deep-dive strategies for our most profitable categories.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 battlecard">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-4 bg-blue-50 text-blue-600 rounded-2xl text-2xl"><i class="fa-solid fa-faucet-drip"></i></div>
+                            <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Avg Deal: $2,500+</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">Home Trades (Plumbing/Electric)</h4>
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">The Pain Point</p>
+                                <p class="text-sm text-slate-600 italic">"I'm losing high-end homeowners because my only presence is a 3.8-star Google listing with no portfolio."</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Why They Need You</p>
+                                <ul class="text-xs text-slate-600 mt-1 space-y-1">
+                                    <li>• Need 24/7 Lead Capture for emergencies</li>
+                                    <li>• Trust builds through License/Insurance display</li>
+                                    <li>• High project costs require professional visual proof</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <p class="text-[10px] font-bold text-blue-600 uppercase mb-1">Killer Feature</p>
+                                <p class="text-xs font-bold text-slate-800">Wix Booking for Quote Estimates</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 battlecard">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-4 bg-orange-50 text-orange-600 rounded-2xl text-2xl"><i class="fa-solid fa-truck-fast"></i></div>
+                            <span class="bg-orange-100 text-orange-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase">High Vol / Low Friction</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">Food Trucks & Pop-Ups</h4>
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">The Pain Point</p>
+                                <p class="text-sm text-slate-600 italic">"Customers never know where I am today. My Instagram menu is blurry and hard to read."</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Why They Need You</p>
+                                <ul class="text-xs text-slate-600 mt-1 space-y-1">
+                                    <li>• Dynamic "Location Finder" map</li>
+                                    <li>• Direct-to-consumer online ordering (Zero Fees)</li>
+                                    <li>• QR Code menus for faster service line-ups</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <p class="text-[10px] font-bold text-orange-600 uppercase mb-1">Killer Feature</p>
+                                <p class="text-xs font-bold text-slate-800">Sync with Google Calendar for locations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tier2" class="scroll-mt-24">
+                <div class="mb-8">
+                    <span class="bg-yellow-100 text-yellow-700 tier-pill">Tier 2: Lifestyle & Beauty</span>
+                    <h3 class="text-3xl font-bold text-slate-900 playfair mt-2">Lifestyle Industry Battlecards</h3>
+                    <p class="text-slate-500">High-frequency, relationship-driven businesses.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 battlecard">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-4 bg-pink-50 text-pink-600 rounded-2xl text-2xl"><i class="fa-solid fa-scissors"></i></div>
+                            <span class="bg-pink-100 text-pink-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Repeat Clients</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">Salons & Nail Bars</h4>
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">The Pain Point</p>
+                                <p class="text-sm text-slate-600 italic">"I'm fully booked through word-of-mouth but I can't grow because new clients can't find or book me online."</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Why They Need You</p>
+                                <ul class="text-xs text-slate-600 mt-1 space-y-1">
+                                    <li>• Online booking eliminates phone interruptions mid-service</li>
+                                    <li>• Gallery/portfolio drives Instagram-style discovery</li>
+                                    <li>• Loyalty programs and gift cards increase LTV</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <p class="text-[10px] font-bold text-pink-600 uppercase mb-1">Killer Feature</p>
+                                <p class="text-xs font-bold text-slate-800">Wix Bookings + SMS Reminder Automation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 battlecard">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="p-4 bg-green-50 text-green-600 rounded-2xl text-2xl"><i class="fa-solid fa-dumbbell"></i></div>
+                            <span class="bg-green-100 text-green-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Subscription Revenue</span>
+                        </div>
+                        <h4 class="text-xl font-bold text-slate-800">Gyms & Personal Trainers</h4>
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">The Pain Point</p>
+                                <p class="text-sm text-slate-600 italic">"I charge per session but I need recurring revenue. My clients forget to rebook and I lose momentum."</p>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Why They Need You</p>
+                                <ul class="text-xs text-slate-600 mt-1 space-y-1">
+                                    <li>• Membership/subscription billing automation</li>
+                                    <li>• Transformation gallery builds social proof</li>
+                                    <li>• Online class scheduling fills off-peak slots</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <p class="text-[10px] font-bold text-green-600 uppercase mb-1">Killer Feature</p>
+                                <p class="text-xs font-bold text-slate-800">Wix Pricing Plans for Monthly Memberships</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="scripts" class="scroll-mt-24">
+                <div class="mb-8">
+                    <h3 class="text-3xl font-bold text-slate-900 playfair">The Script Library</h3>
+                    <p class="text-slate-500">Battle-tested templates for every channel.</p>
+                </div>
+                <div class="space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+                            <span class="text-xs font-bold uppercase tracking-widest text-slate-500"><i class="fa-solid fa-phone mr-2"></i> The "Lost Opportunity" Call</span>
+                            <span class="text-[10px] font-bold bg-blue-100 text-blue-600 px-2 py-1 rounded">Target: High Priority (7+)</span>
+                        </div>
+                        <div class="p-8">
+                            <p class="text-sm text-slate-500 mb-4"><strong>Context:</strong> Use when they have 50+ reviews but NO website. You are highlighting that they are already successful, but "leaking" customers to competitors who look more professional online.</p>
+                            <div class="script-box p-6 rounded-lg text-slate-700 font-mono text-sm leading-relaxed mb-6">
+                                "Hi [Name], I'm [Your Name] with [Company]. I'm calling because I was actually just looking for a [Industry] in [City] and found you on Google Maps. <br><br>
+                                You have <strong>incredible</strong> reviews—honestly, some of the best I've seen in the area. But I noticed something: when I went to click your website to check your [Services/Menu], there wasn't one listed. <br><br>
+                                In a market like [City], about 70% of high-end customers skip a business without a site, even with great reviews. I'm building out professional hubs for [Industry] that include [Killer Feature]. <br><br>
+                                Can I send you a 60-second mockup of what your brand could look like on mobile?"
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="bg-emerald-50 text-emerald-700 p-4 rounded-xl text-xs flex-1">
+                                    <strong>Why it works:</strong> It starts with a compliment. It uses "negative urgency" (losing customers). It offers a "mockup" (low friction) instead of a "meeting" (high friction).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+                            <span class="text-xs font-bold uppercase tracking-widest text-slate-500"><i class="fa-solid fa-person-walking mr-2"></i> The "In the Area" Walk-In</span>
+                            <span class="text-[10px] font-bold bg-orange-100 text-orange-600 px-2 py-1 rounded">Target: Local Retail / Salons</span>
+                        </div>
+                        <div class="p-8">
+                            <div class="script-box p-6 rounded-lg text-slate-700 font-mono text-sm leading-relaxed mb-4">
+                                "Hi, I'm [Your Name]. I build websites for a few businesses here in [Neighborhood]. I was just passing by and realized [Business Name] is the only one on the block without a digital storefront on Google. <br><br>
+                                I don't want to take up your time while you're working, but I've got a design for a [Industry] booking system that cuts out the phone tag you're doing right now. <br><br>
+                                If I leave my card, could I text you a link to a demo later today?"
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200 flex justify-between items-center">
+                            <span class="text-xs font-bold uppercase tracking-widest text-slate-500"><i class="fa-solid fa-envelope mr-2"></i> The Cold Text / DM</span>
+                            <span class="text-[10px] font-bold bg-purple-100 text-purple-600 px-2 py-1 rounded">Target: Food Trucks / Pop-Ups</span>
+                        </div>
+                        <div class="p-8">
+                            <div class="script-box p-6 rounded-lg text-slate-700 font-mono text-sm leading-relaxed mb-4">
+                                "Hey [Name] 👋 Found [Business] on Google Maps — love the reviews. Noticed no site yet. I build mobile-first sites for Houston food businesses. Yours could have a live location map + online ordering in under a week. Want me to send a quick mockup? No cost, no commitment."
+                            </div>
+                            <div class="bg-blue-50 text-blue-700 p-4 rounded-xl text-xs">
+                                <strong>Pro Tip:</strong> Keep DMs under 3 sentences. Use one emoji max. Always end with a yes/no question.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="objections" class="scroll-mt-24 pb-20">
+                <div class="mb-8">
+                    <h3 class="text-3xl font-bold text-slate-900 playfair">Objection Killers</h3>
+                    <p class="text-slate-500">The "Feel-Felt-Found" method for turning a NO into a YES.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
+                        <h4 class="font-bold text-slate-800 text-lg">"I have a Facebook Page already."</h4>
+                        <p class="text-[10px] font-bold text-red-500 uppercase mt-2 mb-4">Reframing Strategy</p>
+                        <p class="text-sm text-slate-600 leading-relaxed italic border-l-2 border-slate-200 pl-4">"I totally understand—Facebook is great for social updates. However, <strong>Facebook is rented land.</strong> If their algorithm changes or your account gets flagged, your business vanishes. A website is your digital real estate—you own it, you control it, and most importantly, it's what Google shows first in local searches."</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
+                        <h4 class="font-bold text-slate-800 text-lg">"I'm too busy, I don't need leads."</h4>
+                        <p class="text-[10px] font-bold text-red-500 uppercase mt-2 mb-4">Reframing Strategy</p>
+                        <p class="text-sm text-slate-600 leading-relaxed italic border-l-2 border-slate-200 pl-4">"That's exactly why we need to talk. My system isn't just about leads—it's about <strong>Efficiency.</strong> Every hour you spend answering the phone for basic questions about your hours or services is an hour you aren't [Plumbing/Cooking]. A Wix site automates your FAQs and Bookings so you get your time back."</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
+                        <h4 class="font-bold text-slate-800 text-lg">"My nephew can build one for free."</h4>
+                        <p class="text-[10px] font-bold text-red-500 uppercase mt-2 mb-4">Reframing Strategy</p>
+                        <p class="text-sm text-slate-600 leading-relaxed italic border-l-2 border-slate-200 pl-4">"Free is a great price! But usually, 'free' doesn't come with <strong>Ongoing Management.</strong> If your site breaks or needs an update on a Friday night, will your nephew be there? I provide professional-grade hosting, security, and 24/7 management so your business stays online without you ever lifting a finger."</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200">
+                        <h4 class="font-bold text-slate-800 text-lg">"How much does it cost?"</h4>
+                        <p class="text-[10px] font-bold text-red-500 uppercase mt-2 mb-4">Reframing Strategy</p>
+                        <p class="text-sm text-slate-600 leading-relaxed italic border-l-2 border-slate-200 pl-4">"Great question. Before I give you a number, let me ask—how many new customers do you get per week? Because our Starter plan at <strong>$149/month</strong> pays for itself if it brings in just one new client. And our Growth plan at $299 typically drives 5-10x ROI in the first 90 days."</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
