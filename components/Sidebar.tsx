@@ -11,7 +11,8 @@ const nav = [
 
 const tools = [
   { label: 'Import Data', href: '/import',   icon: '↑' },
-  { label: 'Playbook',    href: '/playbook', icon: '📋' },
+  { label: 'Playbook',      href: '/playbook',      icon: '📋' },
+  { label: 'Presentation', href: '/presentation',  icon: '🎯' },
 ]
 
 export default function Sidebar() {

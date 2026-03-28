@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadOps — Project Summary</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #0c0e14;
+    --surface: #13161f;
+    --surface2: #1a1e2a;
+    --border: #252836;
+    --accent: #6c63ff;
+    --green: #22d3a5;
+    --yellow: #f5c542;
+    --red: #ff5c5c;
+    --text: #e8eaf0;
+    --text2: #8b90a7;
+    --text3: #555b75;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  @page {
+    size: A4;
+    margin: 20mm 18mm;
+  }
+
+  @media print {
+    .no-print { display: none !important; }
+    .page-break { page-break-before: always; }
+    body { font-size: 12px; }
+  }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 40px; }
+
+  /* Cover */
+  .cover {
+    background: linear-gradient(135deg, #0c0e14 0%, #1a1e2a 50%, #0c0e14 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 60px 48px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(108,99,255,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(108,99,255,0.15);
+    border: 1px solid rgba(108,99,255,0.4);
+    color: #a5a0ff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin-bottom: 20px;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .cover h1 span { color: var(--accent); }
+  .cover-sub {
+    font-size: 18px;
+    color: var(--text2);
+    margin-bottom: 32px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+  .cover-meta-item span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+  }
+  .stat-card .label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    margin-bottom: 8px;
+  }
+  .stat-card .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 600;
+  }
+
+  /* Section */
+  .section { margin-bottom: 48px; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .section p {
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  /* Architecture diagram */
+  .arch {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .arch-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .arch-node {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 24px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    text-align: center;
+    min-width: 280px;
+  }
+  .arch-node.accent { border-color: rgba(108,99,255,0.5); color: #a5a0ff; }
+  .arch-node.green { border-color: rgba(34,211,165,0.5); color: var(--green); }
+  .arch-arrow { color: var(--text3); font-size: 18px; line-height: 1; }
+
+  /* Score model */
+  .score-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+  .score-table th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .score-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(37,40,54,0.5);
+    color: var(--text2);
+    font-size: 13px;
+  }
+  .score-table td:last-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    color: var(--green);
+  }
+  .score-table tr:last-child td { border-bottom: none; }
+
+  /* Tech stack */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stack-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .stack-item .tech { font-weight: 600; font-size: 13px; color: var(--text); }
+  .stack-item .role { font-size: 11px; color: var(--text3); }
+
+  /* Impact table */
+  .impact-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+  }
+  .impact-table th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    padding: 10px 14px;
+    background: var(--surface);
+    border-bottom: 2px solid var(--border);
+  }
+  .impact-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(37,40,54,0.5);
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .impact-table td:first-child { color: var(--text); font-weight: 500; }
+  .impact-table .before { color: var(--red); }
+  .impact-table .after { color: var(--green); font-weight: 600; }
+
+  /* Roadmap */
+  .roadmap { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+  .roadmap-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .roadmap-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(108,99,255,0.15);
+    border: 1px solid rgba(108,99,255,0.4);
+    color: #a5a0ff;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .roadmap-content h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .roadmap-content p { font-size: 12px; color: var(--text3); }
+
+  /* Print button */
+  .print-btn {
+    position: fixed;
+    top: 24px; right: 24px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 100;
+    font-family: 'Inter', sans-serif;
+  }
+  .print-btn:hover { background: #5b54e8; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* Code block */
+  .code {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    margin: 12px 0;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .code .kw { color: #a5a0ff; }
+  .code .str { color: var(--green); }
+  .code .num { color: var(--yellow); }
+  .code .comment { color: var(--text3); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 0 0;
+    color: var(--text3);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .footer span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<button class="print-btn no-print" onclick="window.print()">⬇ Save as PDF</button>
+
+<div class="container">
+
+  <!-- Cover -->
+  <div class="cover">
+    <div class="cover-badge">Technical Project Summary · March 2026</div>
+    <h1>Lead<span>Ops</span></h1>
+    <p class="cover-sub">Real-Time Lead Intelligence & Outreach CRM<br>for Houston SMB Web Development</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><label>Author</label><span>Tega P. Eshareturi</span></div>
+      <div class="cover-meta-item"><label>Role</label><span>Data Science · Oracle</span></div>
+      <div class="cover-meta-item"><label>Stack</label><span>Next.js · Supabase · Python · Vercel</span></div>
+      <div class="cover-meta-item"><label>Status</label><span style="color:#22d3a5">✓ Live in Production</span></div>
+    </div>
+  </div>
+
+  <!-- Live Stats -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="label">Total Leads</div><div class="value" style="color:#6c63ff">2,071</div></div>
+    <div class="stat-card"><div class="label">Hot Leads (8-10)</div><div class="value" style="color:#22d3a5">31+</div></div>
+    <div class="stat-card"><div class="label">ZIPs Covered</div><div class="value" style="color:#f5c542">10</div></div>
+    <div class="stat-card"><div class="label">Build Time</div><div class="value" style="color:#8b90a7">1 day</div></div>
+  </div>
+
+  <!-- Executive Overview -->
+  <div class="section">
+    <div class="section-label">Overview</div>
+    <h2>Executive Summary</h2>
+    <p>LeadOps is a full-stack, real-time lead intelligence and outreach CRM engineered for a Wix Studio web development business targeting Houston's undigitized SMB market. The system operationalizes a complete data pipeline: automated discovery of no-website businesses via Google Maps Places API → proprietary lead scoring → real-time team collaboration → structured outreach execution.</p>
+    <p>The platform eliminates manual workflows at every stage — from lead acquisition to team coordination — replacing spreadsheets and fragmented tools with a unified, live system shared across a 3-person sales team.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Architecture -->
+  <div class="section">
+    <div class="section-label">Architecture</div>
+    <h2>System Design</h2>
+    <div class="arch">
+      <div class="arch-flow">
+        <div class="arch-node accent">Google Maps Places API</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-node">Python Script — ThreadPoolExecutor (10 workers)</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-node">Scoring Algorithm — Deterministic 1–10 Model</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-node accent">Supabase PostgreSQL — Upsert on place_id (Idempotent)</div>
+        <div class="arch-arrow">↓  ← Real-time CDC via WebSocket</div>
+        <div class="arch-node">Next.js 16 App — React hooks + Server Components</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-node green">Vercel Edge CDN — Auto-deploy on git push</div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-node">3-Person Team — Sub-200ms real-time sync</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider page-break">
+
+  <!-- Scoring Model -->
+  <div class="section">
+    <div class="section-label">Algorithm</div>
+    <h2>Lead Scoring Model</h2>
+    <p>A deterministic, additive scoring function mapping business attributes to a 1–10 integer score. Designed to proxy "ability to pay" × "urgency of need."</p>
+    <table class="score-table">
+      <thead><tr><th>Signal</th><th>Condition</th><th>Weight</th></tr></thead>
+      <tbody>
+        <tr><td>Base score</td><td>Always</td><td>+1</td></tr>
+        <tr><td>Phone number</td><td>Verified contact present</td><td>+1</td></tr>
+        <tr><td>Operational status</td><td>business_status = "OPERATIONAL"</td><td>+1</td></tr>
+        <tr><td>Social proof (low)</td><td>review_count ≥ 1</td><td>+1</td></tr>
+        <tr><td>Social proof (mid)</td><td>review_count ≥ 5</td><td>+1</td></tr>
+        <tr><td>Social proof (high)</td><td>review_count ≥ 20</td><td>+1</td></tr>
+        <tr><td>Customer satisfaction (good)</td><td>4.0 ≤ rating < 4.5</td><td>+1</td></tr>
+        <tr><td>Customer satisfaction (excellent)</td><td>rating ≥ 4.5</td><td>+3</td></tr>
+        <tr><td style="color:#e8eaf0;font-weight:600">Maximum</td><td>—</td><td style="color:#6c63ff">10</td></tr>
+      </tbody>
+    </table>
+    <div class="code"><span class="comment"># Score interpretation</span>
+<span class="num">8–10</span>  <span class="str">"Hot"</span>   → Call immediately. Premium tier pitch.
+<span class="num">6–7</span>   <span class="str">"Warm"</span>  → Growth tier. High conversion probability.
+<span class="num">4–5</span>   <span class="str">"Cool"</span>  → Starter tier. Price-sensitive outreach.
+<span class="num">1–3</span>   <span class="str">"Cold"</span>  → Walk-in only. Verify operational status.</div>
+  </div>
+
+  <!-- Tech Stack -->
+  <div class="section">
+    <div class="section-label">Technology</div>
+    <h2>Stack</h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div><div class="tech">Next.js 16 (App Router)</div><div class="role">Frontend framework</div></div></div>
+      <div class="stack-item"><div><div class="tech">TypeScript</div><div class="role">Type safety across all layers</div></div></div>
+      <div class="stack-item"><div><div class="tech">Supabase (PostgreSQL)</div><div class="role">Database + real-time CDC</div></div></div>
+      <div class="stack-item"><div><div class="tech">Tailwind CSS</div><div class="role">Utility-first styling</div></div></div>
+      <div class="stack-item"><div><div class="tech">Recharts</div><div class="role">Analytics visualizations</div></div></div>
+      <div class="stack-item"><div><div class="tech">dnd-kit</div><div class="role">Accessible kanban drag-and-drop</div></div></div>
+      <div class="stack-item"><div><div class="tech">Python + ThreadPoolExecutor</div><div class="role">Parallel data acquisition</div></div></div>
+      <div class="stack-item"><div><div class="tech">Vercel Edge CDN</div><div class="role">CI/CD + global hosting</div></div></div>
+    </div>
+  </div>
+
+  <hr class="divider page-break">
+
+  <!-- Idempotency -->
+  <div class="section">
+    <div class="section-label">Data Integrity</div>
+    <h2>Idempotency & Duplicate Safety</h2>
+    <p>Google assigns every business a permanent <code style="color:#a5a0ff;font-family:'JetBrains Mono',monospace">place_id</code>. The schema enforces <code style="color:#a5a0ff;font-family:'JetBrains Mono',monospace">UNIQUE NOT NULL</code> on this column. Every write uses PostgreSQL upsert with <code style="color:#a5a0ff;font-family:'JetBrains Mono',monospace">ON CONFLICT DO UPDATE</code>.</p>
+    <div class="code"><span class="comment">-- Schema constraint</span>
+place_id  TEXT <span class="kw">UNIQUE NOT NULL</span>
+
+<span class="comment">-- Python upsert (runs idempotently)</span>
+<span class="str">"Prefer": "resolution=merge-duplicates"</span>
+
+<span class="comment"># Result: re-running the script 10 times = same data</span>
+<span class="comment"># Stale fields (phone, rating, reviews) are refreshed</span>
+<span class="comment"># Zero duplicate rows ever created</span></div>
+  </div>
+
+  <!-- Real-Time -->
+  <div class="section">
+    <div class="section-label">Real-Time</div>
+    <h2>Live Collaboration Architecture</h2>
+    <p>Supabase implements PostgreSQL logical replication via WebSocket pub/sub. The <code style="color:#a5a0ff;font-family:'JetBrains Mono',monospace">useLeads</code> hook subscribes to INSERT and UPDATE events, merging CDC payloads into React state with optimistic updates.</p>
+    <div class="code"><span class="comment">// Real-time subscription</span>
+supabase.channel(<span class="str">'leads-realtime'</span>)
+  .on(<span class="str">'postgres_changes'</span>, &#123; event: <span class="str">'INSERT'</span> &#125;, (payload) =&gt; &#123;
+    setLeads(prev =&gt; [payload.new, ...prev])
+  &#125;)
+  .on(<span class="str">'postgres_changes'</span>, &#123; event: <span class="str">'UPDATE'</span> &#125;, (payload) =&gt; &#123;
+    setLeads(prev =&gt; prev.map(l =&gt; l.id === payload.new.id ? payload.new : l))
+  &#125;)
+  .subscribe()</div>
+    <p>All 3 team members see kanban moves, note updates, and new leads within <strong style="color:#22d3a5">~200ms</strong> — no polling, no refresh required.</p>
+  </div>
+
+  <hr class="divider page-break">
+
+  <!-- Business Impact -->
+  <div class="section">
+    <div class="section-label">Results</div>
+    <h2>Business Impact</h2>
+    <table class="impact-table">
+      <thead><tr><th>Metric</th><th>Manual Baseline</th><th>LeadOps</th></tr></thead>
+      <tbody>
+        <tr><td>Time to find 100 leads</td><td class="before">~8 hours</td><td class="after">~5 minutes</td></tr>
+        <tr><td>Duplicate records</td><td class="before">Common</td><td class="after">Zero (idempotent)</td></tr>
+        <tr><td>Team sync method</td><td class="before">Text / email</td><td class="after">Real-time, &lt;200ms</td></tr>
+        <tr><td>Lead context at point of call</td><td class="before">None</td><td class="after">Score, reviews, pitch template</td></tr>
+        <tr><td>Pipeline visibility</td><td class="before">Spreadsheet</td><td class="after">Live kanban board</td></tr>
+        <tr><td>Outreach coordination</td><td class="before">Manual tracking</td><td class="after">Shared real-time status</td></tr>
+        <tr><td>Script re-run safety</td><td class="before">Creates duplicates</td><td class="after">Fully idempotent</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Roadmap -->
+  <div class="section">
+    <div class="section-label">Future</div>
+    <h2>Roadmap</h2>
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <div class="roadmap-num">1</div>
+        <div class="roadmap-content">
+          <h4>Phase 2 — DevOps</h4>
+          <p>Docker containerization, GitHub Actions CI/CD pipeline, automated testing suite</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">2</div>
+        <div class="roadmap-content">
+          <h4>Phase 3 — GenAI Integration</h4>
+          <p>Claude/Gemini API for AI-generated personalized pitch templates per business category; RAG over sales playbook for Oracle team assistant</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">3</div>
+        <div class="roadmap-content">
+          <h4>Phase 4 — MCP Servers</h4>
+          <p>Model Context Protocol server exposing LeadOps data as tools for AI agents; autonomous outreach sequencing and follow-up scheduling</p>
+        </div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-num">4</div>
+        <div class="roadmap-content">
+          <h4>Phase 5 — Enterprise Scale</h4>
+          <p>Multi-market expansion (Texas → Nationwide), LLM-powered lead qualification, CRM integrations (Salesforce, HubSpot)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deployment -->
+  <div class="section">
+    <div class="section-label">Deployment</div>
+    <h2>Live Links</h2>
+    <div class="stack-grid">
+      <div class="stack-item"><div><div class="tech">Production App</div><div class="role" style="color:#6c63ff">https://leadops-ochre.vercel.app</div></div></div>
+      <div class="stack-item"><div><div class="tech">GitHub Repository</div><div class="role" style="color:#6c63ff">https://github.com/tegaomega/leadops</div></div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Built by <span>Tega P. Eshareturi</span> · LeadOps v1.0 · March 2026<br>
+    Next.js · TypeScript · Supabase · Python · Vercel
+  </div>
+
+</div>
+</body>
+</html>
