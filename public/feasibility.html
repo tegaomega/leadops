@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadOps — Business Feasibility Analysis</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #f8f9fc;
+    --white: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --text2: #4a5568;
+    --text3: #a0aec0;
+    --accent: #6c63ff;
+    --green: #38a169;
+    --green-bg: #f0fff4;
+    --red: #e53e3e;
+    --red-bg: #fff5f5;
+    --yellow: #d69e2e;
+    --yellow-bg: #fffff0;
+    --blue: #3182ce;
+    --blue-bg: #ebf8ff;
+    --dark: #0c0e14;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  @page { size: A4; margin: 16mm 14mm; }
+
+  @media print {
+    .no-print { display: none !important; }
+    .page-break { page-break-before: always; }
+
+    body { font-size: 12px; background: white; color: #1a202c; }
+    .container { max-width: 100%; padding: 0 0 40px; }
+
+    /* Cover: swap dark bg → white with purple left border accent */
+    .cover {
+      background: white !important;
+      border-radius: 0 !important;
+      border-left: 6px solid #6c63ff;
+      padding: 40px 36px;
+      margin-bottom: 32px;
+      break-inside: avoid;
+    }
+    .cover::before, .cover::after { display: none; }
+    .cover h1 { color: #1a202c !important; font-size: 38px; }
+    .cover h1 span { color: #6c63ff !important; }
+    .cover-subtitle { color: #4a5568 !important; font-size: 15px; }
+    .cover-badge {
+      background: #f0eeff !important;
+      border-color: #6c63ff !important;
+      color: #6c63ff !important;
+    }
+    .cover-meta { border-top: 1px solid #e2e8f0 !important; }
+    .cover-meta-item label { color: #718096 !important; }
+    .cover-meta-item span { color: #1a202c !important; }
+    .cover-meta-item .live { color: #38a169 !important; }
+
+    /* Ensure section backgrounds print */
+    .card, .metric-card, .risk-card, .step-card, .verdict-box,
+    .pros-cons, .highlight-box, .callout {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Avoid page breaks inside cards */
+    .card, .metric-card, .risk-card, .step-card { break-inside: avoid; }
+
+    /* Section headings keep accent color */
+    .section-tag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  /* ── Layout ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* ── Print Button ── */
+  .print-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    z-index: 100;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.06);
+  }
+  .btn {
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: #5b54e8; transform: translateY(-1px); }
+  .btn-secondary { background: var(--bg); color: var(--text2); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: var(--border); }
+
+  /* ── Cover ── */
+  .cover {
+    background: var(--dark);
+    border-radius: 20px;
+    padding: 56px 48px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, rgba(108,99,255,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -60px;
+    width: 250px; height: 250px;
+    background: radial-gradient(circle, rgba(56,161,105,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(108,99,255,0.15);
+    border: 1px solid rgba(108,99,255,0.3);
+    color: #a5a0ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 99px;
+    margin-bottom: 24px;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 800;
+    color: white;
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+  .cover h1 span { color: var(--accent); }
+  .cover-subtitle {
+    font-size: 20px;
+    color: #8b90a7;
+    margin-bottom: 36px;
+    max-width: 520px;
+    line-height: 1.5;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 36px;
+    flex-wrap: wrap;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .cover-meta-item label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #555b75;
+    margin-bottom: 5px;
+  }
+  .cover-meta-item span { font-size: 14px; font-weight: 600; color: #e8eaf0; }
+  .cover-meta-item .live { color: #22d3a5; }
+
+  /* ── Section ── */
+  .section { margin-bottom: 44px; }
+  .section-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    background: rgba(108,99,255,0.08);
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-bottom: 10px;
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .section .lead {
+    font-size: 16px;
+    color: var(--text2);
+    margin-bottom: 20px;
+    max-width: 680px;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* ── Stat Cards ── */
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 20px;
+    text-align: center;
+  }
+  .stat-card .stat-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-card .stat-label { font-size: 12px; color: var(--text3); font-weight: 500; }
+
+  /* ── Tables ── */
+  .data-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+  .data-table thead tr { background: #f7f8fc; }
+  .data-table th { text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .data-table td { padding: 13px 16px; border-bottom: 1px solid rgba(226,232,240,0.6); font-size: 14px; color: var(--text2); }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table td:first-child { color: var(--text); font-weight: 500; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 99px; }
+  .badge-green  { background: var(--green-bg);  color: var(--green); }
+  .badge-red    { background: var(--red-bg);    color: var(--red); }
+  .badge-yellow { background: var(--yellow-bg); color: var(--yellow); }
+  .badge-blue   { background: var(--blue-bg);   color: var(--blue); }
+  .badge-purple { background: rgba(108,99,255,0.08); color: var(--accent); }
+
+  /* ── Highlight box ── */
+  .highlight {
+    border-left: 4px solid var(--accent);
+    background: rgba(108,99,255,0.04);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+  .highlight strong { color: var(--text); }
+
+  /* ── Dark card ── */
+  .dark-card {
+    background: var(--dark);
+    border-radius: 16px;
+    padding: 28px 28px;
+    color: #e8eaf0;
+  }
+  .dark-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: white; margin-bottom: 8px; }
+  .dark-card p  { color: #8b90a7; font-size: 14px; line-height: 1.7; }
+
+  /* ── Revenue tiers ── */
+  .tier-card {
+    background: var(--white);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .tier-card.featured { border-color: var(--accent); position: relative; }
+  .tier-card.featured::before {
+    content: '⭐ Best Value';
+    position: absolute; top: -12px; left: 20px;
+    background: var(--accent); color: white;
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    padding: 3px 12px; border-radius: 99px;
+  }
+  .tier-price { font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 700; color: var(--text); }
+  .tier-price span { font-size: 14px; font-weight: 400; color: var(--text3); }
+  .tier-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .tier-features { list-style: none; margin-top: 16px; space-y: 8px; }
+  .tier-features li { font-size: 13px; color: var(--text2); padding: 5px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .tier-features li:last-child { border-bottom: none; }
+  .tier-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+  /* ── Risk matrix ── */
+  .risk-low    { color: var(--green);  background: var(--green-bg);  }
+  .risk-medium { color: var(--yellow); background: var(--yellow-bg); }
+  .risk-high   { color: var(--red);    background: var(--red-bg);    }
+  .risk-pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 99px; text-transform: uppercase; }
+
+  /* ── Verdict ── */
+  .verdict {
+    background: linear-gradient(135deg, #0c0e14 0%, #1a1e2a 100%);
+    border-radius: 20px;
+    padding: 40px 40px;
+    text-align: center;
+    color: white;
+  }
+  .verdict h2 { font-family: 'Playfair Display', serif; font-size: 36px; color: white; margin-bottom: 12px; }
+  .verdict p  { color: #8b90a7; font-size: 16px; max-width: 520px; margin: 0 auto 28px; line-height: 1.7; }
+  .verdict-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: left; }
+  .verdict-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 16px; }
+  .verdict-item .v-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #555b75; margin-bottom: 6px; }
+  .verdict-item .v-val   { font-size: 14px; font-weight: 600; color: #e8eaf0; }
+
+  /* ── Divider ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+
+  /* ── Footer ── */
+  .footer { text-align: center; padding: 24px 0 0; color: var(--text3); font-size: 12px; border-top: 1px solid var(--border); margin-top: 40px; }
+  .footer span { color: var(--accent); }
+
+  p { color: var(--text2); line-height: 1.75; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<!-- Print bar -->
+<div class="print-bar no-print">
+  <button class="btn btn-secondary" onclick="window.close()">✕ Close</button>
+  <button class="btn btn-primary" onclick="window.print()">⬇ Download PDF</button>
+</div>
+
+<div class="container">
+
+  <!-- Cover -->
+  <div class="cover">
+    <div class="cover-badge">📊 Business Feasibility Analysis · March 2026</div>
+    <h1>Lead<span>Ops</span></h1>
+    <p class="cover-subtitle">A non-technical business assessment of the Houston SMB lead generation and outreach platform built for Wix Studio web development.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><label>Prepared By</label><span>Tega P. Eshareturi</span></div>
+      <div class="cover-meta-item"><label>Business</label><span>Wix Studio Web Dev · Houston TX</span></div>
+      <div class="cover-meta-item"><label>Team Size</label><span>3 People</span></div>
+      <div class="cover-meta-item"><label>Platform Status</label><span class="live">✓ Live in Production</span></div>
+    </div>
+  </div>
+
+  <!-- What Is This -->
+  <div class="section">
+    <div class="section-tag">Overview</div>
+    <h2>What Is LeadOps?</h2>
+    <p class="lead">A plain-English explanation for anyone evaluating this business.</p>
+    <div class="highlight">
+      <strong>Think of LeadOps as a fishing net for paying customers.</strong> Most small businesses in Houston — restaurants, salons, plumbers, food trucks — show up on Google Maps but have no website. They're invisible to anyone searching on a phone. That's your customer. LeadOps finds them automatically, ranks them by likelihood to buy, and gives your sales team one shared place to track every conversation in real time.
+    </div>
+    <div class="card-grid-3" style="margin-top:20px">
+      <div class="card" style="text-align:center">
+        <div style="font-size:32px;margin-bottom:10px">🔍</div>
+        <div style="font-weight:700;margin-bottom:6px;color:var(--text)">Find</div>
+        <div style="font-size:13px;color:var(--text3)">Scans Google Maps across all Houston ZIP codes for businesses with no website</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:32px;margin-bottom:10px">📊</div>
+        <div style="font-weight:700;margin-bottom:6px;color:var(--text)">Score</div>
+        <div style="font-size:13px;color:var(--text3)">Ranks each business 1–10 based on reviews, phone availability, and operating status</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:32px;margin-bottom:10px">🤝</div>
+        <div style="font-weight:700;margin-bottom:6px;color:var(--text)">Close</div>
+        <div style="font-size:13px;color:var(--text3)">Gives all 3 team members a shared live board to manage outreach without stepping on each other</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Market Opportunity -->
+  <div class="section">
+    <div class="section-tag">Market Opportunity</div>
+    <h2>The Size of the Prize</h2>
+    <p class="lead">How big is the Houston "no-website" small business market?</p>
+
+    <div class="card-grid-4" style="margin-bottom:20px">
+      <div class="stat-card"><div class="stat-val" style="color:#6c63ff">2,071</div><div class="stat-label">Leads found — first run, 10 ZIPs</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:#22d3a5">31+</div><div class="stat-label">Hot leads (score 8–10)</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:#f5c542">10</div><div class="stat-label">ZIP codes scanned so far</div></div>
+      <div class="stat-card"><div class="stat-val" style="color:#8b90a7">120+</div><div class="stat-label">Houston ZIPs available to scan</div></div>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>Scope</th><th>ZIP Codes</th><th>Est. Leads</th><th>Addressable Revenue</th></tr></thead>
+      <tbody>
+        <tr><td>Local (current)</td><td>10</td><td>~2,000–3,000</td><td>$300K – $1.5M/yr</td></tr>
+        <tr><td>Houston (full city)</td><td>~120</td><td>~25,000–40,000</td><td>$3.7M – $20M/yr</td></tr>
+        <tr><td>Texas (statewide)</td><td>~300</td><td>~80,000–120,000</td><td>$12M – $60M/yr</td></tr>
+        <tr><td>Nationwide</td><td>~250 major cities</td><td>500,000+</td><td>$75M+/yr</td></tr>
+      </tbody>
+    </table>
+
+    <div class="highlight" style="margin-top:20px">
+      <strong>Key insight:</strong> You are not competing for customers. You are finding people who don't know they need you yet. Every business on your list is a warm opportunity — they already have customers, they already have reviews, they just have no digital presence.
+    </div>
+  </div>
+
+  <hr class="divider page-break">
+
+  <!-- Revenue Model -->
+  <div class="section">
+    <div class="section-tag">Revenue Model</div>
+    <h2>What You're Selling</h2>
+    <p class="lead">Three tiers. Monthly recurring revenue. Designed to upsell naturally.</p>
+
+    <div class="card-grid-3" style="margin-bottom:24px">
+      <div class="tier-card">
+        <div class="tier-name">Starter</div>
+        <div class="tier-price">$149<span>/month</span></div>
+        <ul class="tier-features">
+          <li>5-Page Professional Site</li>
+          <li>Contact Form + Click-to-Call</li>
+          <li>Google Business Integration</li>
+          <li>Mobile Responsive</li>
+          <li>SSL + Hosting Included</li>
+        </ul>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-name">Growth</div>
+        <div class="tier-price">$299<span>/month</span></div>
+        <ul class="tier-features">
+          <li>Everything in Starter</li>
+          <li>Online Booking System</li>
+          <li>SEO Package</li>
+          <li>Analytics Dashboard</li>
+          <li>Monthly Performance Report</li>
+        </ul>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Premium</div>
+        <div class="tier-price">$499<span>/month</span></div>
+        <ul class="tier-features">
+          <li>Everything in Growth</li>
+          <li>Email Marketing Automation</li>
+          <li>CRM Integration</li>
+          <li>Full Back-Office Management</li>
+          <li>Priority 24hr Support</li>
+        </ul>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>Monthly Revenue Target</th><th>Starter Clients Needed</th><th>Growth Clients Needed</th><th>Mix (Realistic)</th></tr></thead>
+      <tbody>
+        <tr><td>$1,000/month</td><td>7</td><td>4</td><td>3 Starter + 2 Growth</td></tr>
+        <tr><td>$5,000/month</td><td>34</td><td>17</td><td>10 Starter + 8 Growth + 2 Premium</td></tr>
+        <tr><td>$10,000/month</td><td>68</td><td>34</td><td>20 Starter + 15 Growth + 5 Premium</td></tr>
+        <tr><td>$25,000/month</td><td>168</td><td>84</td><td>50 Starter + 40 Growth + 15 Premium</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Financial Analysis -->
+  <div class="section">
+    <div class="section-tag">Financials</div>
+    <h2>Cost vs. Revenue</h2>
+    <p class="lead">What it actually costs to run this, and when it pays for itself.</p>
+
+    <div class="card-grid-2" style="margin-bottom:20px">
+      <div class="dark-card">
+        <h3>Monthly Operating Costs</h3>
+        <p style="margin-top:12px">Infrastructure to run the entire platform</p>
+        <table style="width:100%;margin-top:16px;font-size:13px;border-collapse:collapse">
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
+            <td style="padding:8px 0;color:#8b90a7">Google Maps API</td>
+            <td style="padding:8px 0;color:#e8eaf0;text-align:right;font-family:'JetBrains Mono',monospace">~$5–15</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
+            <td style="padding:8px 0;color:#8b90a7">Database (Supabase)</td>
+            <td style="padding:8px 0;color:#22d3a5;text-align:right;font-family:'JetBrains Mono',monospace">Free</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.08)">
+            <td style="padding:8px 0;color:#8b90a7">Web Hosting (Vercel)</td>
+            <td style="padding:8px 0;color:#22d3a5;text-align:right;font-family:'JetBrains Mono',monospace">Free</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 0 0;color:white;font-weight:600">Total</td>
+            <td style="padding:10px 0 0;color:#6c63ff;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:700">< $20/mo</td>
+          </tr>
+        </table>
+      </div>
+      <div class="card">
+        <div style="font-weight:700;font-size:16px;margin-bottom:16px;color:var(--text)">Break-Even Analysis</div>
+        <div style="space-y:12px">
+          <div style="padding:14px;background:var(--green-bg);border-radius:12px;margin-bottom:10px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--green);margin-bottom:4px">Break Even</div>
+            <div style="font-size:22px;font-weight:700;color:var(--green)">1 Starter Client</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px">$149/mo covers all infrastructure costs</div>
+          </div>
+          <div style="padding:14px;background:var(--blue-bg);border-radius:12px;margin-bottom:10px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--blue);margin-bottom:4px">Profitable at Day 1</div>
+            <div style="font-size:22px;font-weight:700;color:var(--blue)">$129/mo profit</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px">From your very first client</div>
+          </div>
+          <div style="padding:14px;background:rgba(108,99,255,0.06);border-radius:12px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:4px">90-Day Projection (1–3% close rate)</div>
+            <div style="font-size:22px;font-weight:700;color:var(--accent)">$4,000 – $12,000 MRR</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px">Based on 2,071 leads in pipeline</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider page-break">
+
+  <!-- How Team Uses It -->
+  <div class="section">
+    <div class="section-tag">Operations</div>
+    <h2>Day-to-Day Workflow</h2>
+    <p class="lead">What your 3-person team actually does each day.</p>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:16px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px">
+        <div style="font-size:24px;flex-shrink:0">☀️</div>
+        <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:4px">Morning</div><div style="font-size:14px;color:var(--text2)">Open LeadOps → filter "Hot" leads → see today's priority call list sorted by score</div></div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px">
+        <div style="font-size:24px;flex-shrink:0">📞</div>
+        <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:4px">Calling</div><div style="font-size:14px;color:var(--text2)">Click any business → full profile appears (reviews, address, score) → one-click pitch script tailored to their industry</div></div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px">
+        <div style="font-size:24px;flex-shrink:0">✏️</div>
+        <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:4px">After Each Call</div><div style="font-size:14px;color:var(--text2)">Update status: New → Contacted → Follow-Up. Add notes. The whole team sees it instantly — no duplicate outreach ever.</div></div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px">
+        <div style="font-size:24px;flex-shrink:0">✅</div>
+        <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:4px">Closing</div><div style="font-size:14px;color:var(--text2)">Drag the card to "Closed" on the kanban board. Every team member sees pipeline progress in real time.</div></div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:flex-start;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px">
+        <div style="font-size:24px;flex-shrink:0">🤖</div>
+        <div><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:4px">Background (Automated)</div><div style="font-size:14px;color:var(--text2)">Python script finds new no-website businesses continuously. Fresh leads appear in the CRM without anyone lifting a finger.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Competitive Advantage -->
+  <div class="section">
+    <div class="section-tag">Competitive Advantage</div>
+    <h2>Why This Beats Buying a Lead List</h2>
+
+    <table class="data-table">
+      <thead><tr><th>Feature</th><th>Generic Lead Tools (Apollo, ZoomInfo)</th><th>LeadOps</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Data freshness</td>
+          <td><span class="badge badge-red">Old / static lists</span></td>
+          <td><span class="badge badge-green">Live — pulled today</span></td>
+        </tr>
+        <tr>
+          <td>Lead targeting</td>
+          <td><span class="badge badge-red">Generic businesses</span></td>
+          <td><span class="badge badge-green">Only no-website businesses</span></td>
+        </tr>
+        <tr>
+          <td>Lead scoring</td>
+          <td><span class="badge badge-red">None</span></td>
+          <td><span class="badge badge-green">Proprietary 1–10 model</span></td>
+        </tr>
+        <tr>
+          <td>Built-in CRM</td>
+          <td><span class="badge badge-red">Separate tool needed</span></td>
+          <td><span class="badge badge-green">Included — real-time sync</span></td>
+        </tr>
+        <tr>
+          <td>Pitch templates</td>
+          <td><span class="badge badge-red">None</span></td>
+          <td><span class="badge badge-green">Generated per business type</span></td>
+        </tr>
+        <tr>
+          <td>Monthly cost</td>
+          <td><span class="badge badge-red">$100–$500+/month</span></td>
+          <td><span class="badge badge-green">You own it — $20/month</span></td>
+        </tr>
+        <tr>
+          <td>Duplicate outreach protection</td>
+          <td><span class="badge badge-red">Manual</span></td>
+          <td><span class="badge badge-green">Automatic — enforced by database</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider page-break">
+
+  <!-- Risk Analysis -->
+  <div class="section">
+    <div class="section-tag">Risk Analysis</div>
+    <h2>What Could Go Wrong</h2>
+    <p class="lead">Honest assessment of risks and mitigations.</p>
+
+    <table class="data-table">
+      <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Google API cost spike</td>
+          <td><span class="risk-pill risk-low">Low</span></td>
+          <td>Moderate</td>
+          <td>Batched parallel calls; costs scale linearly and predictably</td>
+        </tr>
+        <tr>
+          <td>Lead quality is poor</td>
+          <td><span class="risk-pill risk-low">Low</span></td>
+          <td>Low</td>
+          <td>2,071 leads found in first run; scoring isolates the best ones</td>
+        </tr>
+        <tr>
+          <td>Team doesn't adopt the tool</td>
+          <td><span class="risk-pill risk-medium">Medium</span></td>
+          <td>High</td>
+          <td>Designed to be simple — 3 clicks to update a lead; mobile responsive</td>
+        </tr>
+        <tr>
+          <td>Businesses already have web designers</td>
+          <td><span class="risk-pill risk-low">Low</span></td>
+          <td>Low</td>
+          <td>You're targeting the 40–60% with literally nothing — large uncovered market</td>
+        </tr>
+        <tr>
+          <td>Outreach compliance / spam risk</td>
+          <td><span class="risk-pill risk-medium">Medium</span></td>
+          <td>Moderate</td>
+          <td>Cold calling is legal for B2B; use the playbook scripts — non-aggressive framing</td>
+        </tr>
+        <tr>
+          <td>Client churn after month 1</td>
+          <td><span class="risk-pill risk-medium">Medium</span></td>
+          <td>High</td>
+          <td>Monthly retainer model — deliver ongoing value (updates, SEO, management)</td>
+        </tr>
+        <tr>
+          <td>Market saturation</td>
+          <td><span class="risk-pill risk-low">Very Low</span></td>
+          <td>Low</td>
+          <td>Houston has 40,000+ targets; you've touched 2,071 so far</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Roadmap -->
+  <div class="section">
+    <div class="section-tag">Roadmap</div>
+    <h2>What's Next</h2>
+
+    <table class="data-table">
+      <thead><tr><th>Phase</th><th>Initiative</th><th>Business Impact</th><th>Timeline</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-green">Now</span></td>
+          <td>Run Houston mode — 120 ZIPs</td>
+          <td>25,000–40,000 leads in pipeline</td>
+          <td>This week</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-blue">Phase 2</span></td>
+          <td>DevOps — Docker + CI/CD</td>
+          <td>Automated testing, faster deploys</td>
+          <td>1–2 months</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-purple">Phase 3</span></td>
+          <td>AI pitch generation (Claude/Gemini API)</td>
+          <td>Personalized scripts per business; Oracle team AI assistant</td>
+          <td>2–3 months</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-yellow">Phase 4</span></td>
+          <td>MCP Servers</td>
+          <td>AI agents autonomously qualify and sequence outreach</td>
+          <td>3–6 months</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-red">Phase 5</span></td>
+          <td>Texas → Nationwide</td>
+          <td>500,000+ addressable leads; $75M+ market</td>
+          <td>6–12 months</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Verdict -->
+  <div class="verdict">
+    <div style="display:inline-block;background:rgba(56,161,105,0.15);border:1px solid rgba(56,161,105,0.3);color:#22d3a5;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;padding:5px 16px;border-radius:99px;margin-bottom:20px">✓ Verdict</div>
+    <h2>Fully Feasible.</h2>
+    <p>Infrastructure costs are negligible. The market is massive and underserved. The tool is live, working, and already finding leads. Execution is the only variable.</p>
+    <div class="verdict-grid">
+      <div class="verdict-item"><div class="v-label">Is the market real?</div><div class="v-val" style="color:#22d3a5">Yes — 40,000+ targets in Houston alone</div></div>
+      <div class="verdict-item"><div class="v-label">Is the tool working?</div><div class="v-val" style="color:#22d3a5">Yes — 2,071 leads found and live</div></div>
+      <div class="verdict-item"><div class="v-label">Can it make money?</div><div class="v-val" style="color:#22d3a5">Yes — 1 client covers all costs</div></div>
+      <div class="verdict-item"><div class="v-label">Monthly infrastructure</div><div class="v-val">Less than $20</div></div>
+      <div class="verdict-item"><div class="v-label">Break-even point</div><div class="v-val">1 Starter client ($149/mo)</div></div>
+      <div class="verdict-item"><div class="v-label">90-day revenue potential</div><div class="v-val">$4,000 – $12,000 MRR</div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    LeadOps Business Feasibility Analysis · Prepared by <span>Tega P. Eshareturi</span> · March 2026<br>
+    Production: leadops-ochre.vercel.app · GitHub: github.com/tegaomega/leadops
+  </div>
+
+</div>
+
+<script>
+  // Remove duplicate workflow render attempt
+  document.querySelectorAll('.workflow-placeholder').forEach(el => el.remove());
+</script>
+
+</body>
+</html>
